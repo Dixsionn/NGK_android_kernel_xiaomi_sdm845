@@ -10,7 +10,7 @@ DEFCONFIG=nogravity-dipper_defconfig
 #DEFCONFIG=beryllium_defconfig
 COMPILER=clang
 LINKER=""
-COMPILERDIR="$(pwd)/../clang"
+COMPILERDIR="/workspaces/clang"
 
 # Outputs
 mkdir -p out
@@ -32,17 +32,8 @@ yellow='\033[0;33m'
 red='\033[0;31m'
 nocol='\033[0m'
 
-Build () {
-PATH="${COMPILERDIR}/bin:${PATH}" \
-make -j$(nproc --all) O=out \
-ARCH=${ARCH} \
-CC=${COMPILER} \
-CROSS_COMPILE=${COMPILERDIR}/bin/aarch64-linux-gnu- \
-CROSS_COMPILE_ARM32=${COMPILERDIR}/bin/arm-linux-gnueabi- \
-LD_LIBRARY_PATH=${COMPILERDIR}/lib
-}
 
-Build_lld () {
+Build () {
 PATH="${COMPILERDIR}/bin:${PATH}" \
 make -j$(nproc --all) O=out \
 ARCH=${ARCH} \
