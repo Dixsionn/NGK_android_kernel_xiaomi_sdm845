@@ -9,7 +9,7 @@ make mrproper
 PHONE="dipper"
 ARCH="arm64"
 SUBARCH="arm64"
-DEFCONFIG=nogravity-dipper_defconfig
+DEFCONFIG=nh-dipper_defconfig
 #DEFCONFIG=beryllium_defconfig
 COMPILER=clang
 LINKER=""
