@@ -16,8 +16,8 @@ LINKER=""
 COMPILERDIR="$(pwd)/clang"
 
 if [ ! -d "$COMPILERDIR" ]; then
-        git clone --depth=1 -q https://github.com/kdrag0n/proton-clang.git clang
-    fi
+	wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/42d2c090c14c9c7f4dfd365ae551e2b959dc775c/clang-r584948b.tar.gz && tar -xf * && rm -rf *.gz
+ fi
 
 # Outputs
 mkdir -p zone_dipper
@@ -27,8 +27,8 @@ mkdir -p out/outputs/${PHONE}/SE
 mkdir -p out/outputs/${PHONE}/NSE
 
 # Export shits
-export KBUILD_BUILD_USER=X
-export KBUILD_BUILD_HOST=17
+export KBUILD_BUILD_USER=Zone
+export KBUILD_BUILD_HOST=D543
 
 # Speed up build process
 MAKE="./makeparallel"
@@ -45,26 +45,17 @@ Build () {
 PATH="${COMPILERDIR}/bin:${PATH}" \
 make -j$(nproc --all) O=out \
 ARCH=${ARCH} \
+LLVM=1 LLVM_IAS=1 \
 CC=${COMPILER} \
 CROSS_COMPILE=${COMPILERDIR}/bin/aarch64-linux-gnu- \
 CROSS_COMPILE_ARM32=${COMPILERDIR}/bin/arm-linux-gnueabi- \
-LD_LIBRARY_PATH=${COMPILERDIR}/lib
-}
-
-Build_lld () {
-PATH="${COMPILERDIR}/bin:${PATH}" \
-make -j$(nproc --all) O=out \
-ARCH=${ARCH} \
-CC=${COMPILER} \
-CROSS_COMPILE=${COMPILERDIR}/bin/aarch64-linux-gnu- \
-CROSS_COMPILE_ARM32=${COMPILERDIR}/bin/arm-linux-gnueabi- \
-LD=ld.${LINKER} \
+LD=ld.lld \
 AR=llvm-ar \
 NM=llvm-nm \
 OBJCOPY=llvm-objcopy \
 OBJDUMP=llvm-objdump \
 STRIP=llvm-strip \
-ld-name=${LINKER} 
+LD_LIBRARY_PATH=${COMPILERDIR}/lib
 }
 
 # Make defconfig
@@ -78,14 +69,10 @@ else
 fi
 
 # Build starts here
-if [ -z ${LINKER} ]
-then
     #Start with SE
     cp arch/arm64/boot/dts/qcom/SE_NSE/SE/* arch/arm64/boot/dts/qcom/
     Build
-else
-    Build_lld
-fi
+
 
 if [ $? -ne 0 ]
 then
