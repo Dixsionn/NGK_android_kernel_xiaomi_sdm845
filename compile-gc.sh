@@ -19,13 +19,6 @@ COMPILER=clang
 LINKER=""
 COMPILERDIR="kernel/clang"
 
-if [ ! -d "$COMPILERDIR" ]; then
-mkdir clang
-cd clang
- wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/42d2c090c14c9c7f4dfd365ae551e2b959dc775c/clang-r584948b.tar.gz && tar -xf * && rm -rf *.gz
-cd ..
-    fi
-
 # Outputs
 mkdir -p zone_dipper
 mkdir -p out/outputs
