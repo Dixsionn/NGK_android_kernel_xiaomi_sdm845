@@ -17,7 +17,7 @@ DEFCONFIG=nh-dipper_defconfig
 #DEFCONFIG=beryllium_defconfig
 COMPILER=clang
 LINKER=""
-COMPILERDIR="$(pwd)/clang"
+COMPILERDIR="kernel/clang"
 
 if [ ! -d "$COMPILERDIR" ]; then
 mkdir clang
