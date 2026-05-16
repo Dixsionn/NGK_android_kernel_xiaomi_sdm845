@@ -3,8 +3,7 @@
 # Many parts of this script were taken from @REIGNZ, @idkwhoiam322 and @raphielscape . Huge thanks to them.
 
 # KernelSu
-curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s main
-
+curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/main/kernel/setup.sh" | bash
 #Cleaning
 rm -rf out
 make clean
@@ -18,6 +17,13 @@ DEFCONFIG=nh-dipper_defconfig
 COMPILER=clang
 LINKER=""
 COMPILERDIR="$(pwd)/clang"
+
+if [ ! -d "$COMPILERDIR" ]; then
+mkdir clang
+cd clang
+ wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/42d2c090c14c9c7f4dfd365ae551e2b959dc775c/clang-r584948b.tar.gz && tar -xf * && rm -rf *.gz
+cd ..
+    fi
 
 # Outputs
 mkdir -p zone_dipper
