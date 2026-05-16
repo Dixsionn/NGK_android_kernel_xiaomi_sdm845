@@ -7,24 +7,19 @@ jobs:
       - run:
          command: |
            sudo apt-get update
-           sudo apt-get install -y bc build-essential gcc-arm-linux-gnueabi gcc-aarch64-linux-gnu 
+           sudo apt-get install -y build-essential bc curl flex cpio git zip dwarves gcc-arm-linux-gnueabi libelf-dev gcc-aarch64-linux-gnu libssl-dev python3 clang lld llvm llvm-dev
 
       - run:
           command: |
            git config --global user.name "Dixsionn"
            git config --global user.email "ns.ntnt7777@gmail.com"
            git config --global color.ui false
-           git clone --depth=1 https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME} -b ${CIRCLE_BRANCH} kernel
-           mkdir kernel/clang
-           cd kernel/clang
-           wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/42d2c090c14c9c7f4dfd365ae551e2b959dc775c/clang-r584948b.tar.gz && tar -xf * && rm -rf *.gz
-           cd ..
+           git clone --depth=1 https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME} -b ${CIRCLE_BRANCH} .
            bash compile-gc.sh
 
       - run:
           name: Upload to Pixeldrain
           command: |
-           curl -T "out/outputs/dipper/NSE/Image.gz-dtb" -u "${PIXELDRAIN_API_KEY}" https://pixeldrain.com/api/file/
            curl -T "zone_dipper/dipper.zip" -u "${PIXELDRAIN_API_KEY}" https://pixeldrain.com/api/file/
 
 workflows:
