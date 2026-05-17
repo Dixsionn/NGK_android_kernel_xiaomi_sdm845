@@ -5928,9 +5928,7 @@ invalid:
 	return -EINVAL;
 }
 
-#ifdef CONFIG_KSU
-extern int ksu_hide_setprocattr(const char *name, void *value, size_t size);
-#endif
+
 static int selinux_setprocattr(struct task_struct *p,
 			       char *name, void *value, size_t size)
 {
@@ -5939,9 +5937,7 @@ static int selinux_setprocattr(struct task_struct *p,
 	u32 sid = 0, ptsid;
 	int error;
 	char *str = value;
-#ifdef CONFIG_KSU
-	ksu_hide_setprocattr(name, value, size);
-#endif
+
 	if (current != p) {
 		/* SELinux only allows a process to change its own
 		   security attributes. */
