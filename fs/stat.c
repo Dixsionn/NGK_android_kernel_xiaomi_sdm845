@@ -1,3 +1,4 @@
+
 /*
  *  linux/fs/stat.c
  *
@@ -39,10 +40,6 @@ void generic_fillattr(struct inode *inode, struct kstat *stat)
 }
 
 EXPORT_SYMBOL(generic_fillattr);
-
-#ifdef CONFIG_KSU_SUSFS_SUS_KSTAT
-extern void susfs_sus_kstat_spoof_generic_fillattr(struct inode *inode, struct kstat *stat);
-#endif
 
 /**
  * vfs_getattr_nosec - getattr without security checks
